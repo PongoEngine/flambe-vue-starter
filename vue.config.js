@@ -9,7 +9,7 @@ module.exports = {
       .loader("haxe-loader")
       .tap(() => {
         return {
-          debug: false,
+          debug: true,
         };
       })
       .end();

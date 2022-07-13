@@ -1,7 +1,6 @@
 package game;
 
 import flambe.math.Rectangle;
-import flambe.display.Graphics;
 import flambe.display.Sprite;
 
 class Container extends Sprite {
@@ -18,10 +17,6 @@ class Container extends Sprite {
 
 	override public function getNaturalHeight():Float {
 		return this._height;
-	}
-
-	override public function draw(g:Graphics) {
-		g.fillRect(0x333333, 0, 0, this._width, this._height);
 	}
 
 	@:expose public static function getSize(imgWidth:Int, imgHeight:Int, containerWidth:Int, containerHeight:Int):{x:Float, y:Float, scale:Float} {

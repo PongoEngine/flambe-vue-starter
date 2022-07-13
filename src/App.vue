@@ -97,7 +97,6 @@ body {
   left: var(--layout-x);
   transform: scale(var(--layout-scale));
   transform-origin: 0 0;
-  background-color: rgba(0, 0, 255, 0.5);
 }
 canvas {
   display: block;

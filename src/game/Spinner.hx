@@ -1,5 +1,6 @@
 package game;
 
+import flambe.animation.Sine;
 import flambe.display.ImageSprite;
 import flambe.display.Texture;
 import flambe.display.Sprite;
@@ -11,7 +12,9 @@ class Spinner extends Component {
 		this._root = new Entity();
 		var spr = new ImageSprite(logo);
         spr.centerAnchor();
-        spr.setXY(200, 200);
+		spr.setScale(2.5);
+		spr.x.behavior = new Sine(150, 300, 1.5);
+		spr.y.behavior = new Sine(0, 900, 2);
 		this._root.add(spr);
 	}
 
@@ -24,7 +27,7 @@ class Spinner extends Component {
 	}
 
     override function onUpdate(dt:Float) {
-        this._root.get(Sprite).rotation._ += dt * 50;
+        this._root.get(Sprite).rotation._ += dt * 60;
     }
 
 	private var _root:Entity;

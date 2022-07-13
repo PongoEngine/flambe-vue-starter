@@ -25,10 +25,12 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #00a;
   button {
     cursor: pointer;
     user-select: none;
+    font-size: 60px;
   }
+  background-size: 100px 100px;
+  background-color: #00d4f0;
 }
 </style>

@@ -24,8 +24,8 @@ class Container extends Sprite {
 		g.fillRect(0x333333, 0, 0, this._width, this._height);
 	}
 
-	public function setSize(containerWidth:Int, containerHeight:Int):Container {
-		var imgRatio = (this._height / this._width); // original img ratio
+	@:expose public static function getSize(imgWidth:Int, imgHeight:Int, containerWidth:Int, containerHeight:Int):{x:Float, y:Float, scale:Float} {
+		var imgRatio = (imgHeight / imgWidth); // original img ratio
 		var containerRatio = (containerHeight / containerWidth); // container ratio
 
 		var finalWidth = 0.0; // the scaled img width
@@ -39,16 +39,22 @@ class Container extends Sprite {
 			finalHeight = (containerWidth * imgRatio);
 		}
 
-		var gameScale = finalWidth / this._width;
-		var offsetX = (containerWidth - finalWidth) / 2;
-		var offsetY = (containerHeight - finalHeight) / 2;
+		_scratch.scale = finalWidth / imgWidth;
+		_scratch.x = (containerWidth - finalWidth) / 2;
+		_scratch.y = (containerHeight - finalHeight) / 2;
 
-		this.setScale(gameScale);
-		this.setXY(offsetX, offsetY);
+		return _scratch;
+	}
+
+	public function setSize(containerWidth:Int, containerHeight:Int):Container {
+		var size = getSize(this._width, this._height, containerWidth, containerHeight);
+		this.setScale(size.scale);
+		this.setXY(size.x, size.y);
 
 		return this;
 	}
 
 	private var _width:Int;
 	private var _height:Int;
+	private static var _scratch:{x:Float, y:Float, scale:Float} = {x: 0, y: 0, scale: 1};
 }

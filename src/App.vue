@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       gameWidth: 514,
-      gameHeight: 696,
+      gameHeight: 996,
       stack: [],
     };
   },
@@ -36,39 +36,22 @@ export default {
     };
     const flambe = require("../build.hxml");
     this.stack = flambe.flambe.System.get_web().stack;
-    window.addEventListener("resize", this.layoutScale);
-    this.layoutScale();
+    const sizer = flambe.game.Container.getSize;
+    window.addEventListener("resize", this.layoutScale.bind(this, sizer));
+    this.layoutScale(sizer);
     flambe.game.Main.start(this.gameWidth, this.gameHeight);
   },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.layoutScale);
-  },
   methods: {
-    layoutScale() {
-      const containerWidth = window.innerWidth;
-      const containerHeight = window.innerHeight;
-
-      const imgRatio = this.gameHeight / this.gameWidth; // original img ratio
-      const containerRatio = containerHeight / containerWidth; // container ratio
-
-      let finalWidth = 0.0; // the scaled img width
-      let finalHeight = 0.0;
-
-      if (containerRatio < imgRatio) {
-        finalHeight = containerHeight;
-        finalWidth = containerHeight / imgRatio;
-      } else {
-        finalWidth = containerWidth;
-        finalHeight = containerWidth * imgRatio;
-      }
-
-      const gameScale = finalWidth / this.gameWidth;
-      const offsetX = (containerWidth - finalWidth) / 2;
-      const offsetY = (containerHeight - finalHeight) / 2;
-
-      document.documentElement.style.setProperty("--layout-scale", gameScale);
-      document.documentElement.style.setProperty("--layout-x", offsetX + "px");
-      document.documentElement.style.setProperty("--layout-y", offsetY + "px");
+    layoutScale(sizer) {
+      var size = sizer(
+        this.gameWidth,
+        this.gameHeight,
+        window.innerWidth,
+        window.innerHeight
+      );
+      document.documentElement.style.setProperty("--layout-scale", size.scale);
+      document.documentElement.style.setProperty("--layout-x", size.x + "px");
+      document.documentElement.style.setProperty("--layout-y", size.y + "px");
     },
   },
 };
@@ -86,6 +69,27 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+body {
+  background: radial-gradient(
+      circle at 100% 50%,
+      transparent 20%,
+      #00d4f0 21%,
+      #00d4f0 34%,
+      transparent 35%,
+      transparent
+    ),
+    radial-gradient(
+        circle at 0% 50%,
+        transparent 20%,
+        #00d4f0 21%,
+        #00d4f0 34%,
+        transparent 35%,
+        transparent
+      )
+      0 -50px;
+  background-color: #eeeeee;
+  background-size: 75px 100px;
 }
 .ui {
   position: absolute;
